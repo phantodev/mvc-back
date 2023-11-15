@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Document</title>
+
+    <style>
+      #login-form {
+        width: 300px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+
+      #login-form div {
+        margin-bottom: 10px;
+      }
+
+      #login-form label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      #login-form input[type="text"],
+      #login-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      #login-form input[type="button"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      #login-form input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="login-form">
+      <div>
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" />
+      </div>
+      <div>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" />
+      </div>
+      <div>
+        <input type="button" value="Entrar" id="btn-login" />
+      </div>
+    </form>
+    <script>
+      if (localStorage.getItem("tokenIfood")) {
+        window.location.href = "http://www.devmedia.com.br";
+      }
+      document
+        .getElementById("btn-login")
+        .addEventListener("click", handleLogin);
+      async function handleLogin() {
+        try {
+          const axiosPayload = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          };
+          const response = await fetch(
+            "http://localhost:4000/api/ifood/loginAxios",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(axiosPayload),
+            }
+          );
+          // Aguardar a resolução da promessa retornada por response.json()
+          const data = await response.json();
+          localStorage.setItem("tokenIfood", JSON.stringify(data.token));
+          // window.location.href = "http://www.devmedia.com.br";
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    </script>
+  </body>
+</html>

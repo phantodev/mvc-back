@@ -15,11 +15,11 @@ const UsersControllers = {
     });
   },
   createUser: (req, res) => {
-    const { birthday, name, email } = req.body;
+    const { birthday, name, email, avatar } = req.body;
 
     const query =
-      'INSERT INTO "Users" (birthday,name, email) VALUES ($1,$2,$3)';
-    const values = [birthday, name, email];
+      'INSERT INTO "Users" (birthday,name, email, avatar) VALUES ($1,$2,$3,$4)';
+    const values = [birthday, name, email, avatar];
 
     pool.query(query, values, (errors, results) => {
       if (errors) {

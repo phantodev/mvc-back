@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn-products">Pegar Produtos</button>
+    <script>
+      document
+        .getElementById("btn-products")
+        .addEventListener("click", getAllProducts);
+      async function getAllProducts(cep) {
+        try {
+          const response = await fetch(
+            "http://localhost:4000/api/ifood/products",
+            {
+              method: "GET",
+            }
+          );
+          // Aguardar a resolução da promessa retornada por response.json()
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    </script>
+  </body>
+</html>
